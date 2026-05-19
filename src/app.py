@@ -65,29 +65,29 @@ def analizar_texto_local(texto):
         return {"veredicto": "ERROR", "confianza": 0, "justificacion": f"Error interno del modelo: {e}"}
 
 # --- INTERFAZ STREAMLIT ---
-tab1, tab2 = st.tabs(["📝 Analizar Texto", "🌐 Analizar URL (Tiempo Real)"])
+tab1, tab2 = st.tabs(["Analizar Texto", "Analizar URL (Tiempo Real)"])
 
 def mostrar_resultado(resultado):
     if resultado:
-        st.markdown("### 📊 Resultado del Análisis Local Avanzado:")
+        st.markdown("### Resultado del Análisis Local Avanzado:")
         veredicto = resultado.get("veredicto", "DESCONOCIDO")
         confianza = resultado.get("confianza", 0)
         justificacion = resultado.get("justificacion", "Sin justificación disponible.")
         
         if veredicto == "REAL":
-            st.success(f"✅ **NOTICIA REAL** (Confianza: {confianza}%)")
+            st.success(f"**NOTICIA REAL** (Confianza: {confianza}%)")
         else:
-            st.error(f"🚨 **POSIBLE FAKE NEWS / BULO** (Confianza: {confianza}%)")
-        st.info(f"🧠 **Análisis de la IA:** {justificacion}")
+            st.error(f"**POSIBLE FAKE NEWS / BULO** (Confianza: {confianza}%)")
+        st.info(f"**Análisis de la IA:** {justificacion}")
 
 with tab1:
     st.subheader("Análisis de Texto Directo")
     user_input = st.text_area("Texto o titular de la noticia:", height=150, placeholder="Pega el artículo aquí...")
     if st.button("Analizar con IA", key="btn_text"):
         if user_input.strip() == "":
-            st.warning("⚠️ Introduce texto.")
+            st.warning("Introduce texto.")
         else:
-            with st.spinner("🤖 Procesando matriz matemática local..."):
+            with st.spinner("Procesando matriz matemática local..."):
                 res = analizar_texto_local(user_input)
                 mostrar_resultado(res)
 
@@ -96,19 +96,19 @@ with tab2:
     url_input = st.text_input("URL del periódico o artículo:", placeholder="https://elpais.com/...")
     if st.button("Escanear y Analizar", key="btn_url"):
         if url_input.strip() == "":
-            st.warning("⚠️ Introduce una URL válida.")
+            st.warning("Introduce una URL válida.")
         else:
-            with st.spinner("🕵️‍♂️ Extrayendo el contenido de la web..."):
+            with st.spinner("Extrayendo el contenido de la web..."):
                 try:
                     article = Article(url_input)
                     article.download()
                     article.parse()
                     news_text = article.text
                     if len(news_text.strip()) < 50:
-                        st.warning("⚠️ No se pudo extraer suficiente texto.")
+                        st.warning("No se pudo extraer suficiente texto.")
                     else:
-                        st.info(f"📖 **Artículo detectado:** {article.title}")
-                        with st.spinner("🤖 Analizando contenido localmente..."):
+                        st.info(f"**Artículo detectado:** {article.title}")
+                        with st.spinner("Analizando contenido localmente..."):
                             res = analizar_texto_local(news_text)
                             mostrar_resultado(res)
                 except Exception as e:
