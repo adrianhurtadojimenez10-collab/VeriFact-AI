@@ -112,7 +112,7 @@ with tab2:
                             res = analizar_texto_local(news_text)
                             mostrar_resultado(res)
                 except Exception as e:
-                    st.error("❌ Error al acceder a la URL o parsear el contenido.")
+                    st.error("Error al acceder a la URL o parsear el contenido.")
 
 st.markdown("---")
 st.caption("VeriFact-AI Pro v4.0 - Algoritmo Naive Bayes entrenado localmente en Español.")
